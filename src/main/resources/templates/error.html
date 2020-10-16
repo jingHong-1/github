@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rain Test</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="/css/rain.css">
+
+    <script src="/bootstrap/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="bootstrap/js/npm.js"></script>-->
+</head>
+<body>
+<div th:insert="~{head :: nav}"></div>
+
+<!--头部结束-->
+<div class="jumbotron" style="margin: 200px;padding-left: 500px">
+    <h1>出错啦！！！!</h1>
+    <p th:text="${message}">服务太热了，要不然等下再来试试......</p>
+    <p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
+</div>
+</body>
+</html>

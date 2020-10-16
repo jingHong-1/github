@@ -1,0 +1,40 @@
+body {
+    background-color: #efefef;
+}
+.main {
+    background-color: white;
+    margin: 60px;
+}
+.btn-publish {
+    float: right;
+    margin-bottom: 15px;
+}
+.media-object {
+    width: 65px;
+    height: 65px;
+}
+.text-desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.profile .section {
+    margin-top: 20px;
+}
+.rain-menu {
+    color: #999;
+    font-size: 13px;
+}
+.media-body {
+    padding-top: 10px;
+}
+.comment {
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;
+    合并，两个时：上下，左右 ，四个时：上左下右*/
+    margin: 10px 0;
+}
+.btn-comment {
+    float: right;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Comment" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="PARENT_ID" property="parentId" jdbcType="BIGINT" />
+    <result column="TYPE" property="type" jdbcType="INTEGER" />
+    <result column="COMMENTATOR" property="commentator" jdbcType="INTEGER" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="BIGINT" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="BIGINT" />
+    <result column="LIKE_COUNT" property="likeCount" jdbcType="BIGINT" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PARENT_ID, TYPE, COMMENTATOR, GMT_CREATE, GMT_MODIFIED, LIKE_COUNT, CONTENT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.model.CommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from COMMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from COMMENT
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from COMMENT
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.model.CommentExample" >
+    delete from COMMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Comment" >
+    insert into COMMENT ( PARENT_ID, TYPE,
+      COMMENTATOR, GMT_CREATE, GMT_MODIFIED, 
+      LIKE_COUNT, CONTENT)
+    values (#{parentId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
+      #{commentator,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
+      #{likeCount,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Comment" >
+    insert into COMMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="commentator != null" >
+        COMMENTATOR,
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE,
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED,
+      </if>
+      <if test="likeCount != null" >
+        LIKE_COUNT,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="commentator != null" >
+        #{commentator,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=BIGINT},
+      </if>
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.model.CommentExample" resultType="java.lang.Integer" >
+    select count(*) from COMMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update COMMENT
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null" >
+        PARENT_ID = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentator != null" >
+        COMMENTATOR = #{record.commentator,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmtCreate != null" >
+        GMT_CREATE = #{record.gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="record.gmtModified != null" >
+        GMT_MODIFIED = #{record.gmtModified,jdbcType=BIGINT},
+      </if>
+      <if test="record.likeCount != null" >
+        LIKE_COUNT = #{record.likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update COMMENT
+    set ID = #{record.id,jdbcType=BIGINT},
+      PARENT_ID = #{record.parentId,jdbcType=BIGINT},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      COMMENTATOR = #{record.commentator,jdbcType=INTEGER},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=BIGINT},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=BIGINT},
+      LIKE_COUNT = #{record.likeCount,jdbcType=BIGINT},
+      CONTENT = #{record.content,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Comment" >
+    update COMMENT
+    <set >
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="commentator != null" >
+        COMMENTATOR = #{commentator,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE = #{gmtCreate,jdbcType=BIGINT},
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED = #{gmtModified,jdbcType=BIGINT},
+      </if>
+      <if test="likeCount != null" >
+        LIKE_COUNT = #{likeCount,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Comment" >
+    update COMMENT
+    set PARENT_ID = #{parentId,jdbcType=BIGINT},
+      TYPE = #{type,jdbcType=INTEGER},
+      COMMENTATOR = #{commentator,jdbcType=INTEGER},
+      GMT_CREATE = #{gmtCreate,jdbcType=BIGINT},
+      GMT_MODIFIED = #{gmtModified,jdbcType=BIGINT},
+      LIKE_COUNT = #{likeCount,jdbcType=BIGINT},
+      CONTENT = #{content,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.example.demo.model.CommentExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from COMMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
