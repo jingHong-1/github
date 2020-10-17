@@ -1,6 +1,9 @@
 function post() {
     var questionId = $("#question_id").val();
     var content = $("#comment_content").val();
+    if (!content){
+        alert("不能回复空内容");
+    }
 
     $.ajax({
 
@@ -15,8 +18,9 @@ function post() {
         }),
         success: function (response) {
             if (response.code == 200){
-                //隐藏掉回复框
-                $("#comment_section").hide()
+                // //隐藏掉回复框
+                // $("#comment_section").hide()
+                window.location.reload();
             }  else {
                 if (response.code == 2003){
                     var isAccepted = confirm(response.message);

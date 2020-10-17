@@ -1,16 +1,24 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDto;
 import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
 import com.example.demo.mapper.CommentMapper;
 import com.example.demo.mapper.QuestionExtMapper;
 import com.example.demo.mapper.QuestionMapper;
-import com.example.demo.model.Comment;
-import com.example.demo.model.Question;
+import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,6 +29,8 @@ public class CommentService {
     private QuestionMapper questionMapper;
     @Autowired
     private QuestionExtMapper questionExtMapper;
+    @Autowired
+    private UserMapper userMapper;
     @Transactional
     //帮助开启事务，解决造成部分执行部分不执行的问题
     public void insert(Comment comment) {
@@ -58,5 +68,39 @@ public class CommentService {
 
         }
 
+    }
+//回复列表
+    public List<CommentDto> listByQuestionId(Long id) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria()
+                .andParentIdEqualTo(id)
+                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+        //排序
+        commentExample.setOrderByClause("gmt_create desc");
+        //匹配type
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        //得到评论列表
+        if (comments.size() == 0){
+            return new ArrayList<>();
+        }
+        //获取去重复的评论者
+        Set<Long> commentators = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
+        List<Long> userIds = new ArrayList<>();
+        userIds.addAll(commentators);
+        //获取请论人，并转换为map
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdIn(userIds);
+        List<User> users = userMapper.selectByExample(userExample);
+        Map<Long, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+        //匹配评论和user对象
+        //转换comment 为commentDto
+        List<CommentDto> commentDtos = comments.stream().map(comment -> {
+            CommentDto commentDto = new CommentDto();
+            BeanUtils.copyProperties(comment,commentDto);
+            commentDto.setUser(userMap.get(comment.getCommentator()));
+            return commentDto;
+        }).collect(Collectors.toList());
+
+        return commentDtos;
     }
 }

@@ -1,12 +1,25 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.User;
 import lombok.Data;
 
 @Data
 public class CommentDto {
-    private Long parentId;
-    private String comment;
-    private Integer type;
-    private String content;
-}
+    private Long id;
 
+    private Long parentId;
+
+    private Integer type;
+
+    private Long commentator;
+
+    private Long gmtCreate;
+
+    private Long gmtModified;
+
+    private Long likeCount;
+
+    private String content;
+
+    private User user;
+}

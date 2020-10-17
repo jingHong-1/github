@@ -95,7 +95,9 @@ public class QuestionService {
         Integer offsize = size*(page - 1);
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(userId);
+
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offsize,size));
+
         List<QuestionDto> questionDtoList = new ArrayList<>();
 
         for (Question question : questions) {

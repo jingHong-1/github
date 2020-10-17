@@ -22,8 +22,10 @@ body {
     margin-top: 20px;
 }
 .rain-menu {
+    display: block;
     color: #999;
     font-size: 13px;
+    margin-bottom: 15px;
 }
 .media-body {
     padding-top: 10px;
@@ -34,7 +36,25 @@ body {
     合并，两个时：上下，左右 ，四个时：上左下右*/
     margin: 10px 0;
 }
+.comments {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
 .btn-comment {
     float: right;
     margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+.menu {
+    color: #999;
+    margin-top: 5px;
+}
+.menu .icon {
+    margin-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu .icon:hover {
+    color: #499ef3;
 }
