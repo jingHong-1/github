@@ -10,13 +10,17 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.Question;
 import com.example.demo.model.QuestionExample;
 import com.example.demo.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -50,11 +54,10 @@ public class QuestionService {
         paginationDto.setPagination(totalpage,page);
 //----
         Integer offsize = size*(page - 1);
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offsize,size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample,new RowBounds(offsize,size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
-
-
-
 
         for (Question question : questions) {
             User user =  userMapper.selectByPrimaryKey(question.getCreator());
@@ -65,9 +68,6 @@ public class QuestionService {
 
         }
         paginationDto.setQuestion(questionDtoList);
-
-
-
 
         return paginationDto;
     }
@@ -109,9 +109,6 @@ public class QuestionService {
 
         }
         paginationDto.setQuestion(questionDtoList);
-
-
-
 
         return paginationDto;
     }
@@ -161,6 +158,26 @@ public class QuestionService {
         question.setId(id);
         question.setViewCount(1);
         questionExtMapper.intView(question);
+    }
+
+    public List<QuestionDto> selectRelated(QuestionDto queryDto) {
+        if (StringUtils.isBlank(queryDto.getTag())) {
+            return new ArrayList<>();
+        }
+//拼接string
+
+        String[] tags = StringUtils.split(queryDto.getTag(), ',');
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        Question question = new Question();
+        question.setId(queryDto.getId());
+        question.setTag(regexpTag);
+        List<Question> questions = questionExtMapper.selectRelated(question);
+        List<QuestionDto> questionDtos = questions.stream().map(q -> {
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(q,questionDto);
+            return questionDto;
+        }).collect(Collectors.toList());
+        return questionDtos;
     }
 }
 

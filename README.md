@@ -21,6 +21,8 @@ https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
 ##连接数据库错误
 create user if not exists sa password '123';
 alter user sa admin true ;
-##命令行
+##命令行--自动生成数据库文件
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
+
+usermapper  272   commentmapper 272  questionmapper 371

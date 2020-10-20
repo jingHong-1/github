@@ -5,9 +5,10 @@ import com.example.demo.exception.CustomizeException;
 import lombok.Data;
 
 @Data
-public class ResultDto {
+public class ResultDto<T> {
     private Integer code;
     private String message;
+    private T data;
 
 
     public static ResultDto erroeOf(Integer code,String message){
@@ -28,6 +29,14 @@ public class ResultDto {
         ResultDto resultDto = new ResultDto();
         resultDto.setCode(200);
         resultDto.setMessage("请求成功");
+        return resultDto;
+    }
+    //封装一个List，用于返回前端
+    public static <T> ResultDto okOf(T t){
+        ResultDto resultDto = new ResultDto();
+        resultDto.setCode(200);
+        resultDto.setMessage("请求成功");
+        resultDto.setData(t);
         return resultDto;
     }
 

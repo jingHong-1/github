@@ -4,10 +4,7 @@ import com.example.demo.dto.CommentDto;
 import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
-import com.example.demo.mapper.CommentMapper;
-import com.example.demo.mapper.QuestionExtMapper;
-import com.example.demo.mapper.QuestionMapper;
-import com.example.demo.mapper.UserMapper;
+import com.example.demo.mapper.*;
 import com.example.demo.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentExMapper commentExMapper;
     @Transactional
     //帮助开启事务，解决造成部分执行部分不执行的问题
     public void insert(Comment comment) {
@@ -48,6 +47,12 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //增加二級评论数
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExMapper.intCommentCount(parentComment);
+
         } else {
             //回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
@@ -55,26 +60,20 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
 
-            try {
-                commentMapper.insert(comment);
-            }catch (Exception e){
-
-                e.printStackTrace();
-            }
+            commentMapper.insert(comment);
 
             question.setCommentCount(1);
             questionExtMapper.intCommentCount(question);
-
 
         }
 
     }
 //回复列表
-    public List<CommentDto> listByQuestionId(Long id) {
+    public List<CommentDto> ListByTargeId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andTypeEqualTo(type.getType());//此处封装type类型
         //排序
         commentExample.setOrderByClause("gmt_create desc");
         //匹配type
