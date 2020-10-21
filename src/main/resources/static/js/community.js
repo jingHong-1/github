@@ -59,8 +59,8 @@ function comment(e) {
 
 function collapseComments(e) {
     var id = e.getAttribute("data-id");
-    var comments = $("#comment-"+ id);
-    var twoComment=$("#twoComment-"+id);
+    var comments = $("#comment-" + id);
+    var twoComment = $("#twoComment-" + id);
     //获取一下二级评论的状态
     var collapse = e.getAttribute("data-collapse");
     if (collapse) {
@@ -84,17 +84,17 @@ function collapseComments(e) {
 
                 htm += "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 comments'><div class='media'><div class='media-left media-middle'>";
 
-                htm += "<a><img class='media-object img-rounded 'src=" + comment.user.avatarUrl +"></a></div>";
-                htm += "<div class='media-body'><h5 class='media-heading'> <span>"+comment.user.name+ "</span></h5>";
+                htm += "<a><img class='media-object img-rounded 'src=" + comment.user.avatarUrl + "></a></div>";
+                htm += "<div class='media-body'><h5 class='media-heading'> <span>" + comment.user.name + "</span></h5>";
 
-                htm +=" <div>"+comment.content+"</div><div class='menu'> <span class='pull-right'>"+formateDate(comment.gmtCreate)+"</span>"
+                htm += " <div>" + comment.content + "</div><div class='menu'> <span class='pull-right'>" + formateDate(comment.gmtCreate) + "</span>"
 
 
                 htm += "</div></div></div></div>";
 
             });
             //追加标签
-        // <!--//评论输入框-->
+            // <!--//评论输入框-->
 
 
             subCommentContainer.html(htm);
@@ -110,11 +110,23 @@ function collapseComments(e) {
 
 }
 
+// 格式化时间
+function formateDate(timestamp) {
+    var date = new Date(timestamp);
+    var y = 1900 + date.getYear();
+    var m = "0" + (date.getMonth() + 1);
+    var d = "0" + date.getDate();
+    return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+}
 
-function formateDate(timestamp){
-    var date =  new Date(timestamp);
-    var y = 1900+date.getYear();
-    var m = "0"+(date.getMonth()+1);
-    var d = "0"+date.getDate();
-    return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+// 选择标签
+function selectTag(value) {
+    var prevalue = $("#tag").val();
+    if (prevalue.indexOf(value) == -1) {
+        if (prevalue) {
+            $("#tag").val(prevalue + ',' + value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
 }

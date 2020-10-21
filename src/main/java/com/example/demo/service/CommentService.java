@@ -61,7 +61,6 @@ public class CommentService {
             }
 
             commentMapper.insert(comment);
-
             question.setCommentCount(1);
             questionExtMapper.intCommentCount(question);
 
