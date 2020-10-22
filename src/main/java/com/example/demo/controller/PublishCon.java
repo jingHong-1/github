@@ -91,8 +91,7 @@ public class PublishCon {
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
-
-        question.setId(id);
+//        question.setId(id);
 
         questionService.createOrUpdate(question);
 

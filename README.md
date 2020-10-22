@@ -24,5 +24,5 @@ alter user sa admin true ;
 ##命令行--自动生成数据库文件
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
-
-usermapper  272   commentmapper 272  questionmapper 371
+##自动生成时需要修改的文件位置
+usermapper   commentmapper 110 114 comment_count  questionmapper 132行id

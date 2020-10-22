@@ -129,11 +129,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.demo.model.Question" >
-    insert into QUESTION ( TITLE, GMT_CREATE,
+    insert into QUESTION (TITLE, GMT_CREATE,
       GMT_MODIFIED, CREATOR, COMMENT_COUNT, 
       VIEW_COUNT, LIKE_COUNT, TAG, 
       DESCRIPTION)
-    values ( #{title,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT},
+    values (#{title,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT},
       #{gmtModified,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{commentCount,jdbcType=INTEGER}, 
       #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, 
       #{description,jdbcType=CLOB})
