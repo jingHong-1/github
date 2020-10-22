@@ -120,7 +120,8 @@ function formateDate(timestamp) {
 }
 
 // 选择标签
-function selectTag(value) {
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
     var prevalue = $("#tag").val();
     if (prevalue.indexOf(value) == -1) {
         if (prevalue) {
@@ -129,4 +130,8 @@ function selectTag(value) {
             $("#tag").val(value);
         }
     }
+}
+//展开标签
+function showSelectTag() {
+    $("#selectTag").show();
 }

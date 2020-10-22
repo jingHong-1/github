@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +76,7 @@ public class QuestionService {
         Integer totalpage;
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(userId);
+
         Integer totalCount = questionMapper.countByExample(questionExample);
         if (totalCount % size ==0){
             totalpage = totalCount/size;
@@ -95,7 +95,7 @@ public class QuestionService {
         Integer offsize = size*(page - 1);
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(userId);
-
+        example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offsize,size));
 
         List<QuestionDto> questionDtoList = new ArrayList<>();
@@ -171,7 +171,9 @@ public class QuestionService {
         Question question = new Question();
         question.setId(queryDto.getId());
         question.setTag(regexpTag);
+
         List<Question> questions = questionExtMapper.selectRelated(question);
+
         List<QuestionDto> questionDtos = questions.stream().map(q -> {
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(q,questionDto);

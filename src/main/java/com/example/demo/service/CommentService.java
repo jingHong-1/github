@@ -6,6 +6,7 @@ import com.example.demo.exception.CustomizeErrorCode;
 import com.example.demo.exception.CustomizeException;
 import com.example.demo.mapper.*;
 import com.example.demo.model.*;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,8 @@ public class CommentService {
         commentExample.setOrderByClause("gmt_create desc");
         //匹配type
         List<Comment> comments = commentMapper.selectByExample(commentExample);
+
+
         //得到评论列表
         if (comments.size() == 0){
             return new ArrayList<>();

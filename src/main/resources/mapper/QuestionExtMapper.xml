@@ -39,7 +39,7 @@
   </update>
 
   <select resultMap="BaseResultMap" parameterType="com.example.demo.model.Question" id="selectRelated" >
-    select * from QUESTION where id != #{id} and tag regexp #{tag}
+    select * from QUESTION where id != #{id} and tag regexp #{tag} order by #{gmtCreate} limit 10
 
   </select>
 
