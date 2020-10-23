@@ -6,10 +6,12 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/rain.css">
+    <link rel="stylesheet" href="/editor/css/editormd.min.css">
 
-    <script src="/bootstrap/js/jquery.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/js/community.js"></script>
+    <script src="/bootstrap/js/jquery.min.js" type="application/javascript"></script>
+    <script src="/bootstrap/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/editor/js/editormd.min.js" type="application/javascript"></script>
     <!--<script src="bootstrap/js/npm.js"></script>-->
 </head>
 <body>
@@ -28,11 +30,29 @@
                     <input type="text" class="form-control" id="title" name="title" th:value="${title}"
                            placeholder="问题标题....." autocomplete="off">
                 </div>
-                <div class="form-group">
+                <!--增加富文本框-->
+
+                <div class="form-group" id="question-editor">
                     <label for="description">问题补充（必填，请参照右侧提示）</label>
-                    <textarea class="form-control" name="description" th:text="${description}" id="description"
-                              cols="30" rows="10"></textarea>
+                    <textarea class="form-control" style="display: none" name="description" th:text="${description}" id="description"
+                              cols="30" rows="10">
+
+                    </textarea>
                 </div>
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                             width  : "100%",
+                             height : "350px",
+                             path   : "/editor/lib/",
+                             delay:0,
+                             watch:false,
+                             placeholder : "请输入问题描述........"
+                        });
+                    });
+                </script>
+
+                <!--富文本框-->
                 <div class="form-group">
                     <label for="tag">添加标签</label>
                     <input type="text" class="form-control" id="tag" name="tag" th:value="${tag}"
