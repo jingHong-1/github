@@ -523,6 +523,146 @@ public class NotificationExample {
             addCriterion("STATUS not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andNotifierNameIsNull() {
+            addCriterion("NOTIFIER_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameIsNotNull() {
+            addCriterion("NOTIFIER_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameEqualTo(String value) {
+            addCriterion("NOTIFIER_NAME =", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameNotEqualTo(String value) {
+            addCriterion("NOTIFIER_NAME <>", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameGreaterThan(String value) {
+            addCriterion("NOTIFIER_NAME >", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameGreaterThanOrEqualTo(String value) {
+            addCriterion("NOTIFIER_NAME >=", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameLessThan(String value) {
+            addCriterion("NOTIFIER_NAME <", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameLessThanOrEqualTo(String value) {
+            addCriterion("NOTIFIER_NAME <=", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameLike(String value) {
+            addCriterion("NOTIFIER_NAME like", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameNotLike(String value) {
+            addCriterion("NOTIFIER_NAME not like", value, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameIn(List<String> values) {
+            addCriterion("NOTIFIER_NAME in", values, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameNotIn(List<String> values) {
+            addCriterion("NOTIFIER_NAME not in", values, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameBetween(String value1, String value2) {
+            addCriterion("NOTIFIER_NAME between", value1, value2, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNotifierNameNotBetween(String value1, String value2) {
+            addCriterion("NOTIFIER_NAME not between", value1, value2, "notifierName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleIsNull() {
+            addCriterion("OUTER_TITLE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleIsNotNull() {
+            addCriterion("OUTER_TITLE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleEqualTo(String value) {
+            addCriterion("OUTER_TITLE =", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleNotEqualTo(String value) {
+            addCriterion("OUTER_TITLE <>", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleGreaterThan(String value) {
+            addCriterion("OUTER_TITLE >", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("OUTER_TITLE >=", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleLessThan(String value) {
+            addCriterion("OUTER_TITLE <", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleLessThanOrEqualTo(String value) {
+            addCriterion("OUTER_TITLE <=", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleLike(String value) {
+            addCriterion("OUTER_TITLE like", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleNotLike(String value) {
+            addCriterion("OUTER_TITLE not like", value, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleIn(List<String> values) {
+            addCriterion("OUTER_TITLE in", values, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleNotIn(List<String> values) {
+            addCriterion("OUTER_TITLE not in", values, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleBetween(String value1, String value2) {
+            addCriterion("OUTER_TITLE between", value1, value2, "outerTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andOuterTitleNotBetween(String value1, String value2) {
+            addCriterion("OUTER_TITLE not between", value1, value2, "outerTitle");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

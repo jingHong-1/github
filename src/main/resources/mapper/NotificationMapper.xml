@@ -9,6 +9,8 @@
     <result column="TYPE" property="type" jdbcType="INTEGER" />
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="BIGINT" />
     <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="NOTIFIER_NAME" property="notifierName" jdbcType="VARCHAR" />
+    <result column="OUTER_TITLE" property="outerTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, NOTIFIER, RECEIVER, OUTERID, TYPE, GMT_CREATE, STATUS
+    ID, NOTIFIER, RECEIVER, OUTERID, TYPE, GMT_CREATE, STATUS, NOTIFIER_NAME, OUTER_TITLE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.model.NotificationExample" >
     select
@@ -104,10 +106,12 @@
   <insert id="insert" parameterType="com.example.demo.model.Notification" >
     insert into NOTIFICATION (ID, NOTIFIER, RECEIVER, 
       OUTERID, TYPE, GMT_CREATE, 
-      STATUS)
+      STATUS, NOTIFIER_NAME, OUTER_TITLE
+      )
     values (#{id,jdbcType=BIGINT}, #{notifier,jdbcType=BIGINT}, #{receiver,jdbcType=BIGINT}, 
       #{outerid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{gmtCreate,jdbcType=BIGINT}, 
-      #{status,jdbcType=INTEGER})
+      #{status,jdbcType=INTEGER}, #{notifierName,jdbcType=VARCHAR}, #{outerTitle,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.model.Notification" >
     insert into NOTIFICATION
@@ -133,6 +137,12 @@
       <if test="status != null" >
         STATUS,
       </if>
+      <if test="notifierName != null" >
+        NOTIFIER_NAME,
+      </if>
+      <if test="outerTitle != null" >
+        OUTER_TITLE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -155,6 +165,12 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="notifierName != null" >
+        #{notifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="outerTitle != null" >
+        #{outerTitle,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +204,12 @@
       <if test="record.status != null" >
         STATUS = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.notifierName != null" >
+        NOTIFIER_NAME = #{record.notifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outerTitle != null" >
+        OUTER_TITLE = #{record.outerTitle,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +223,9 @@
       OUTERID = #{record.outerid,jdbcType=BIGINT},
       TYPE = #{record.type,jdbcType=INTEGER},
       GMT_CREATE = #{record.gmtCreate,jdbcType=BIGINT},
-      STATUS = #{record.status,jdbcType=INTEGER}
+      STATUS = #{record.status,jdbcType=INTEGER},
+      NOTIFIER_NAME = #{record.notifierName,jdbcType=VARCHAR},
+      OUTER_TITLE = #{record.outerTitle,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +251,12 @@
       <if test="status != null" >
         STATUS = #{status,jdbcType=INTEGER},
       </if>
+      <if test="notifierName != null" >
+        NOTIFIER_NAME = #{notifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="outerTitle != null" >
+        OUTER_TITLE = #{outerTitle,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
@@ -237,7 +267,9 @@
       OUTERID = #{outerid,jdbcType=BIGINT},
       TYPE = #{type,jdbcType=INTEGER},
       GMT_CREATE = #{gmtCreate,jdbcType=BIGINT},
-      STATUS = #{status,jdbcType=INTEGER}
+      STATUS = #{status,jdbcType=INTEGER},
+      NOTIFIER_NAME = #{notifierName,jdbcType=VARCHAR},
+      OUTER_TITLE = #{outerTitle,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
   <select resultMap="BaseResultMap" parameterType="com.example.demo.model.NotificationExample" id="selectByExampleWithRowbounds" >

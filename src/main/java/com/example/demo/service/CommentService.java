@@ -37,7 +37,7 @@ public class CommentService {
     
     @Transactional
     //帮助开启事务，解决造成部分执行部分不执行的问题
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if (comment.getParentId() == null || comment.getParentId()==0){
             throw new CustomizeException(CustomizeErrorCode.TAGET_PARAM_NOT_FOUND);
         }
@@ -51,6 +51,11 @@ public class CommentService {
             if (dbComment == null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
+            //查询评论的问题
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if (question == null){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
             commentMapper.insert(comment);
             //增加二級评论数
             Comment parentComment = new Comment();
@@ -58,7 +63,7 @@ public class CommentService {
             parentComment.setCommentCount(1);
             commentExMapper.intCommentCount(parentComment);
             //创建通知
-            createNotify(comment, dbComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_COMMENT, question.getId());
 
         } else {
             //回复问题
@@ -70,21 +75,23 @@ public class CommentService {
             question.setCommentCount(1);
             questionExtMapper.intCommentCount(question);
            //创建通知问题
-            createNotify(comment, question.getCreator(), NotificationTypeEnum.REPLY_QUESTION);
+            createNotify(comment, question.getCreator(),commentator.getName(),question.getTitle(), NotificationTypeEnum.REPLY_QUESTION, question.getId());
             
 
         }
 
     }
 //回复通知方法
-    private void createNotify(Comment comment, Long receiver, NotificationTypeEnum notificationType) {
+    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationType, Long outerId) {
         Notification notification = new Notification();
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setType(notificationType.getType());
-        notification.setOuterid(comment.getParentId());
+        notification.setOuterid(outerId);
         notification.setNotifier(comment.getCommentator());
         notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
         notification.setReceiver(receiver);
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(outerTitle);
         notificationMapper.insert(notification);
     }
 

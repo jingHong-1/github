@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.PaginationDto;
 import com.example.demo.model.Notification;
 import com.example.demo.model.User;
+import com.example.demo.service.NotificationService;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,12 +41,12 @@ public class ProfileCon {
             PaginationDto paginationDto = questionService.listByUserId(user.getId(), page, size);
             model.addAttribute("pagination",paginationDto);
         }else if ("replies".equals(action)){
-            
+            PaginationDto paginationDto = notificationService.list(user.getId(), page, size);
             model.addAttribute("section","replies");
+            model.addAttribute("pagination",paginationDto);
             model.addAttribute("sectionName","我的最新回复");
-        }
 
-        
+        }
 
         return "profile";
     }
