@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-public class PaginationDto {
-    private List<QuestionDto> question;
+public class PaginationDto <T>{
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -36,9 +36,6 @@ public class PaginationDto {
             }
         }
 
-
-
-
         //是否展示上一页
         if (page == 1){
             showPrevious = false;
@@ -64,9 +61,6 @@ public class PaginationDto {
         }else {
             showEndPage = true;
         }
-
-
-
 
 
     }
