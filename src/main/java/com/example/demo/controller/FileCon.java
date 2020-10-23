@@ -18,8 +18,6 @@ public class FileCon {
         FileDto fileDto = new FileDto();
         fileDto.setSuccess(1);
         fileDto.setUrl("/img/11.jpg");
-
-
         return fileDto;
     }
 
