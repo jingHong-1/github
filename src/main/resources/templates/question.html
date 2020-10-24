@@ -123,11 +123,11 @@
                         <div class="media-left media-middle">
                             <a href="#">
                                 <img class="media-object img-rounded"
-                                     th:src="${question.user.avatarUrl}">
+                                     th:src="${session.user != null ? session.user.avatarUrl :'/img/default-avator.png'}">
                             </a>
                         </div>
                         <div class="media-body">
-                            <span th:text="${question.user.name}"></span><br>
+                            <span th:text="${session.user != null ? session.user.name :'匿名用户'}"></span><br>
                             <!--<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>-->
                         </div>
                     </div>
